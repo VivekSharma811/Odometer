@@ -78,6 +78,7 @@ fun OdometerScreen(
                 text = "${state.data.speed} KM/h",
                 color = textColor
             )
+            Spacer(modifier = Modifier.height(10.dp))
             Text(
                 text = "${state.data.range} KM/h",
                 color = textColor
