@@ -99,6 +99,17 @@ class MainActivity : ComponentActivity() {
     ) {
         val windowManager = context.getSystemService(Context.WINDOW_SERVICE) as WindowManager
 
+        val params = WindowManager.LayoutParams(
+            800, 500,
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
+                WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
+            else WindowManager.LayoutParams.TYPE_PHONE,
+            WindowManager.LayoutParams.FLAG_NOT_TOUCH_MODAL,
+            PixelFormat.TRANSLUCENT
+        ).apply {
+            gravity = Gravity.CENTER
+        }
+
         val composeView = ComposeView(context).apply {
             setViewTreeLifecycleOwner(this@MainActivity)
             setViewTreeViewModelStoreOwner(this@MainActivity)
@@ -117,17 +128,6 @@ class MainActivity : ComponentActivity() {
                         onUIEvent = {})
                 }
             }
-        }
-
-        val params = WindowManager.LayoutParams(
-            800, 500,
-            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
-                WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
-            else WindowManager.LayoutParams.TYPE_PHONE,
-            WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
-            PixelFormat.TRANSLUCENT
-        ).apply {
-            gravity = Gravity.CENTER
         }
 
         windowManager.addView(composeView, params)
