@@ -66,7 +66,7 @@ fun OdometerScreen(
 ) {
     Box(modifier = modifier) {
         Text(
-            text = "${state.data.trip}",
+            text = "Trip - ${state.data.trip}",
             modifier = Modifier.align(Alignment.TopEnd),
             color = textColor
         )
@@ -75,12 +75,12 @@ fun OdometerScreen(
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             Text(
-                text = "${state.data.speed} KM/h",
+                text = "Speed - ${state.data.speed} KM/h",
                 color = textColor
             )
             Spacer(modifier = Modifier.height(10.dp))
             Text(
-                text = "${state.data.range} KM/h",
+                text = "Range - ${state.data.range} KM/h",
                 color = textColor
             )
             if (state.showCTA) {
@@ -91,12 +91,12 @@ fun OdometerScreen(
             }
         }
         Text(
-            text = "${state.data.odo} KM",
+            text = "Odo - ${state.data.odo} KM",
             modifier = Modifier.align(Alignment.BottomStart),
             color = textColor
         )
         Text(
-            text = "${state.data.trip} KM",
+            text = "Mode - ${state.data.mode}",
             modifier = Modifier.align(Alignment.BottomEnd),
             color = textColor
         )

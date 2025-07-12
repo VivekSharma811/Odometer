@@ -23,6 +23,5 @@ class SendOdometerBroadcastUseCase @Inject constructor(
         intent.`package` = DASHBOARD_APP_PACKAGE
         intent.putExtra(DATA, data)
         context.sendBroadcast(intent)
-        Log.d("DebugResult", "SendOdometerBroadcastUseCase: ${data.speed}")
     }
 }
