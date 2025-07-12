@@ -1,5 +1,6 @@
 package com.ather.odometer.odometer.presentation
 
+import android.content.ComponentName
 import android.content.Intent
 import android.widget.Toast
 import androidx.compose.foundation.layout.Box
@@ -39,9 +40,11 @@ fun OdometerScreen(
             when (it) {
                 OdometerUIEffect.OpenDashboardApp -> {
                     try {
-                        ctx.startActivity(Intent(Intent.ACTION_MAIN).apply {
-                            setClassName(DASHBOARD_APP_PACKAGE, DASHBOARD_APP_ACTIVITY)
-                        })
+                        val intent = Intent(Intent.ACTION_MAIN).apply {
+                            component = ComponentName(DASHBOARD_APP_PACKAGE, DASHBOARD_APP_ACTIVITY)
+                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
+                        }
+                        ctx.startActivity(intent)
                     } catch (e: Exception) {
                         Toast.makeText(ctx, "Could not find the Dashboard", Toast.LENGTH_SHORT)
                             .show()
