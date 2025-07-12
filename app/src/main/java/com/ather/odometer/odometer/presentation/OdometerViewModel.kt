@@ -38,7 +38,7 @@ class OdometerViewModel @Inject constructor(
     init {
         viewModelScope.launch(Dispatchers.IO) {
             while (true) {
-                delay(5000)
+                delay(2000)
                 val newData = generateData()
                 withContext(Dispatchers.Main.immediate) {
                     _uiState.update { it.copy(data = newData) }
