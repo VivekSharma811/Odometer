@@ -17,6 +17,7 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.runtime.getValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 import androidx.core.app.ActivityCompat.startActivityForResult
@@ -47,31 +48,40 @@ fun OdometerScreen(
     }
 
     OdometerScreen(
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(50.dp),
         state = state,
+        textColor = Color.Black,
         onUIEvent = viewModel::onUIEvent
     )
 }
 
 @Composable
 fun OdometerScreen(
+    modifier: Modifier = Modifier,
     state: OdometerUIState,
+    textColor: Color,
     onUIEvent: (OdometerUIEvent) -> Unit
 ) {
-    Box(
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(20.dp)
-    ) {
+    Box(modifier = modifier) {
         Text(
             text = "${state.data.trip}",
-            modifier = Modifier.align(Alignment.TopEnd)
+            modifier = Modifier.align(Alignment.TopEnd),
+            color = textColor
         )
         Column(
             modifier = Modifier.align(Alignment.Center),
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            Text(text = "${state.data.speed} KM/h")
-            Text(text = "${state.data.range} KM/h")
+            Text(
+                text = "${state.data.speed} KM/h",
+                color = textColor
+            )
+            Text(
+                text = "${state.data.range} KM/h",
+                color = textColor
+            )
             if (state.showCTA) {
                 Spacer(modifier = Modifier.height(20.dp))
                 Button(onClick = { onUIEvent(OdometerUIEvent.OnDashboardCTAClicked) }) {
@@ -81,11 +91,13 @@ fun OdometerScreen(
         }
         Text(
             text = "${state.data.odo} KM",
-            modifier = Modifier.align(Alignment.BottomStart)
+            modifier = Modifier.align(Alignment.BottomStart),
+            color = textColor
         )
         Text(
             text = "${state.data.trip} KM",
-            modifier = Modifier.align(Alignment.BottomEnd)
+            modifier = Modifier.align(Alignment.BottomEnd),
+            color = textColor
         )
     }
 }

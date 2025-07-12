@@ -14,10 +14,15 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.platform.ComposeView
 import androidx.compose.ui.unit.dp
 import androidx.lifecycle.ViewModelProvider
@@ -99,23 +104,30 @@ class MainActivity : ComponentActivity() {
             setViewTreeViewModelStoreOwner(this@MainActivity)
             setViewTreeSavedStateRegistryOwner(this@MainActivity)
             setContent {
-                Surface(modifier = Modifier.size(300.dp, 200.dp)) {
-                    OdometerScreen(viewModel.uiState.collectAsState().value, {})
+                Surface(
+                    modifier = Modifier.size(500.dp, 400.dp)
+                ) {
+                    OdometerScreen(
+                        modifier = Modifier
+                            .fillMaxSize()
+                            .background(MaterialTheme.colorScheme.primary)
+                            .padding(20.dp),
+                        textColor = Color.White,
+                        state = viewModel.uiState.collectAsState().value,
+                        onUIEvent = {})
                 }
             }
         }
 
         val params = WindowManager.LayoutParams(
-            500, 300,
+            800, 500,
             if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O)
                 WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY
             else WindowManager.LayoutParams.TYPE_PHONE,
             WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE,
             PixelFormat.TRANSLUCENT
         ).apply {
-            gravity = Gravity.TOP or Gravity.START
-            x = 100
-            y = 300
+            gravity = Gravity.CENTER
         }
 
         windowManager.addView(composeView, params)
