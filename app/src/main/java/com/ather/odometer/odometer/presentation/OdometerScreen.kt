@@ -19,6 +19,7 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
+import androidx.core.app.ActivityCompat.startActivityForResult
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import com.ather.odometer.odometer.utils.DASHBOARD_APP_ACTIVITY
@@ -30,25 +31,16 @@ import kotlinx.coroutines.flow.collectLatest
  * */
 @Composable
 fun OdometerScreen(
-    viewModel: OdometerViewModel = hiltViewModel()
+    openDashboardApp: () -> Unit,
+    viewModel: OdometerViewModel
 ) {
     val state by viewModel.uiState.collectAsStateWithLifecycle()
-    val ctx = LocalContext.current
 
     LaunchedEffect(Unit) {
         viewModel.uiEffect.collectLatest {
             when (it) {
                 OdometerUIEffect.OpenDashboardApp -> {
-                    try {
-                        val intent = Intent(Intent.ACTION_MAIN).apply {
-                            component = ComponentName(DASHBOARD_APP_PACKAGE, DASHBOARD_APP_ACTIVITY)
-                            addFlags(Intent.FLAG_ACTIVITY_NEW_TASK)
-                        }
-                        ctx.startActivity(intent)
-                    } catch (e: Exception) {
-                        Toast.makeText(ctx, "Could not find the Dashboard", Toast.LENGTH_SHORT)
-                            .show()
-                    }
+                    openDashboardApp()
                 }
             }
         }
@@ -61,7 +53,7 @@ fun OdometerScreen(
 }
 
 @Composable
-private fun OdometerScreen(
+fun OdometerScreen(
     state: OdometerUIState,
     onUIEvent: (OdometerUIEvent) -> Unit
 ) {

@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 /**
- * DTO for interacting with Dashboard App
+ * DTO for interaction between Odometer and Dashboard
  * */
 @Parcelize
 data class OdometerReading(
